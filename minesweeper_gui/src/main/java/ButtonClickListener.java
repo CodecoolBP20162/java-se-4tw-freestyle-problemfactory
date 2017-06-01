@@ -3,11 +3,13 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Stack;
 
+/**
+ * This class handles button clicks and some of their effect
+ */
 public class ButtonClickListener implements ActionListener {
     private static final Logger logger = LoggerFactory.getLogger(Minesweeper.class);
     static Minesweeper minesweeper = new Minesweeper();
@@ -16,7 +18,10 @@ public class ButtonClickListener implements ActionListener {
     static char[][] playerMap = new char[10][10];
     static Stack stack = new Stack();
 
-
+    /**
+     * This method controls effects in case a user click on a button
+     * @param e This object contains the button's action commands
+     */
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
@@ -65,6 +70,10 @@ public class ButtonClickListener implements ActionListener {
         }
     }
 
+    /**
+     * This method writes stack's content to steps.txt at the end of the game
+     * @param stack Contains user clicks on minefield
+     */
     public void writeStackToConsole(Stack stack){
         try{
             PrintWriter writer = new PrintWriter("steps.txt", "UTF-8");

@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Class for creating frame and minefield
+ */
 public class Minesweeper {
 
     // Create new frame and set its size
@@ -12,6 +15,12 @@ public class Minesweeper {
 
     private static final Logger logger = LoggerFactory.getLogger(Minesweeper.class);
 
+    /**
+     * Method that creates the map with random placed mines
+     *
+     * @param size Size of the map/minefield
+     * @return two dimensional array ( char[][] )
+     */
     public char[][] generateMap(int size) {
 
         Random rand = new Random();
@@ -32,6 +41,12 @@ public class Minesweeper {
     }
 
 
+    /**
+     * This method counts the mines around a single field
+     *
+     * @param map Map/minefield to where counting mines are needed
+     * @return two dimensional array ( char[][] )
+     */
     public char[][] countMines(char[][] map) {
         char[][] newMap = new char[10][10];
         for (int i = 0; i < map.length; i++) {
@@ -61,7 +76,13 @@ public class Minesweeper {
     }
 
 
-    private int isMine(int i, int x, char[][] map) {
+    /**
+     * @param i   row coordinate
+     * @param x   column coordinate
+     * @param map Map/field where the user is playing
+     * @return integer number
+     */
+    public int isMine(int i, int x, char[][] map) {
         if (i >= 0 && x >= 0 && i <= map.length - 1 && x <= map[0].length - 1 && map[i][x] == '*') {
             return 1;
         } else {
@@ -71,6 +92,10 @@ public class Minesweeper {
     }
 
 
+    /**
+     * This method prints map to the console
+     * @param map Map/field where the user is playing
+     */
     public void printMap(char[][] map) {
         for (int i = 0; i < map.length; i++) {
             for (int x = 0; x < map[i].length; x++) {
@@ -81,13 +106,9 @@ public class Minesweeper {
     }
 
 
-    public static void main(String[] args) {
-        Minesweeper game = new Minesweeper();
-        // char[][] map = game.generateMap(10);
-        // game.printMap(game.countMines(map));
-        game.startFrame();
-    }
-
+    /**
+     * This method creates and shows the main page of the game.
+     */
     public void startFrame() {
 
         removeComponents();
@@ -113,13 +134,12 @@ public class Minesweeper {
         JButton help = new JButton("Help");
         JButton exit = new JButton("Exit :(");
 
-        start.setBounds(0,0,50,50);
-        help.setBounds(0,0,50,50);
+        start.setBounds(0, 0, 50, 50);
+        help.setBounds(0, 0, 50, 50);
 
         JPanel panel = new JPanel();
-        panel.setSize(new Dimension(100,100));
+        panel.setSize(new Dimension(100, 100));
         panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-
 
 
         start.setActionCommand("start");
@@ -154,11 +174,13 @@ public class Minesweeper {
         window.setVisible(true);
     }
 
-
+    /**
+     * This method creates the "help" menu form on the window frame
+     */
     public void helpPanel() {
 
         removeComponents();
-        window.setSize(600,100);
+        window.setSize(600, 100);
         JPanel helpPanel = new JPanel();
         helpPanel.setBackground(new Color(255, 180, 42));
 
@@ -186,9 +208,13 @@ public class Minesweeper {
         window.setVisible(true);
     }
 
+    /**
+     * The method creates the main panel when the user starts the program
+     * @param newMap Map/field where the user is playing
+     * @return JPanel object with the main menu buttons
+     */
     public JPanel startGame(char[][] newMap) {
-        //window.setVisible(false);
-        window.setSize(600,550);
+        window.setSize(600, 550);
         removeComponents();
 
         JPanel mainPanel = new JPanel();
@@ -216,7 +242,11 @@ public class Minesweeper {
         return mainPanel;
     }
 
-
+    /**
+     * This method creates a panel that contains the minefield
+     * @param newMap Map/field where the user is playing
+     * @return JPanel object
+     */
     public JPanel drawPanel(char[][] newMap) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(10, 10));
@@ -233,6 +263,10 @@ public class Minesweeper {
         return panel;
     }
 
+    /**
+     * This method controls to show the map/field on the window frame
+     * @param playerMap Map/field where the user is playing
+     */
     public void drawTable(char[][] playerMap) {
         removeComponents();
         window.add(startGame(playerMap));
@@ -241,12 +275,15 @@ public class Minesweeper {
     }
 
 
-
+    /**
+     * When user clicked on a mine, this method creates the end screen where user can choose
+     * to exit or play again
+     */
     public void gameEnded() {
         window.setVisible(false);
         removeComponents();
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(255,0,0));
+        panel.setBackground(new Color(255, 0, 0));
         JLabel label = new JLabel();
         label.setText("<html><h2>Haha! You fool! There was a mine! Game over :)</h2></html>");
         JButton newGame = new JButton("Play again");
@@ -271,8 +308,18 @@ public class Minesweeper {
     }
 
 
+    /**
+     * Cleans the window frame and sets it to empty
+     */
     public void removeComponents() {
         window.getContentPane().removeAll();
     }
 
+
+    public static void main(String[] args) {
+        Minesweeper game = new Minesweeper();
+        // char[][] map = game.generateMap(10);
+        // game.printMap(game.countMines(map));
+        game.startFrame();
+    }
 }
